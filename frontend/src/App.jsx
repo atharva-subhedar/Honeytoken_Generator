@@ -19,9 +19,9 @@ function App() {
 
   const fetchData = async () => {
     try {
-      const tokenRes = await axios.get('http://localhost:5000/api/honeytokens');
+      const tokenRes = await axios.get('https://honeytoken-generator-qyvnaxd9s-atharvabs02-8635s-projects.vercel.app/api/honeytokens');
       setTokens(tokenRes.data);
-      const alertRes = await axios.get('http://localhost:5000/api/honeytokens/alerts');
+      const alertRes = await axios.get('https://honeytoken-generator-qyvnaxd9s-atharvabs02-8635s-projects.vercel.app/api/honeytokens/alerts');
       setAlerts(alertRes.data);
     } catch (error) { console.error(error); }
   };
@@ -38,7 +38,7 @@ function App() {
     e.preventDefault();
     setLoading(true);
     try {
-      await axios.post('http://localhost:5000/api/honeytokens/generate', { tokenType });
+      await axios.post('https://honeytoken-generator-qyvnaxd9s-atharvabs02-8635s-projects.vercel.app/api/honeytokens/generate', { tokenType });
       fetchData(); 
     } catch (error) { alert("Generation failed."); }
     setLoading(false);
@@ -48,7 +48,7 @@ function App() {
     e.preventDefault();
     setBreachStatus('AUTHENTICATING...');
     try {
-      await axios.post('http://localhost:5000/api/honeytokens/breach', { stolenData: hackerInput });
+      await axios.post('https://honeytoken-generator-qyvnaxd9s-atharvabs02-8635s-projects.vercel.app/api/honeytokens/breach', { stolenData: hackerInput });
     } catch (error) {
       setTimeout(() => setBreachStatus('CRITICAL ERROR: ACCESS DENIED. LOGGED.'), 1200);
     }
@@ -147,7 +147,7 @@ function App() {
               </pre>
               <div style={{ marginTop: '15px' }}>
                 {token.tokenType === 'PDF_PIXEL' ? (
-                  <a href={`http://localhost:5000/api/honeytokens/download/${token.tokenId}`} style={{ textDecoration: 'none', padding: '8px 15px', background: colors.accent, color: colors.bg, borderRadius: '6px', fontSize: '12px', fontWeight: 'bold' }}>Download PDF</a>
+                  <a href={`https://honeytoken-generator-qyvnaxd9s-atharvabs02-8635s-projects.vercel.app/api/honeytokens/download/${token.tokenId}`} style={{ textDecoration: 'none', padding: '8px 15px', background: colors.accent, color: colors.bg, borderRadius: '6px', fontSize: '12px', fontWeight: 'bold' }}>Download PDF</a>
                 ) : (
                   <button onClick={() => { navigator.clipboard.writeText(token.tokenType === 'AWS_KEY' ? token.tokenData.AccessKeyId : token.tokenData.ConnectionString); alert("Stolen data copied!"); }}
                     style={{ background: '#475569', color: 'white', border: 'none', padding: '8px 15px', borderRadius: '6px', fontSize: '12px', cursor: 'pointer' }}>Copy Key</button>
