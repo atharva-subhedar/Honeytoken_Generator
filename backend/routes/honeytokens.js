@@ -154,7 +154,12 @@ router.get('/', async (req, res) => {
         const tokens = await Honeytoken.find().sort({ createdAt: -1 });
         res.json(tokens);
     } catch (err) {
-        res.status(500).json({ error: 'Server error fetching tokens' });
+        console.error("DB Fetch Error:", err);
+        // This will now print the EXACT reason it failed to your browser screen
+        res.status(500).json({ 
+            error: 'Server error fetching tokens', 
+            real_issue: err.message 
+        });
     }
 });
 
